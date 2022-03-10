@@ -1,12 +1,11 @@
 # a03
-This assignment will introduce creating APIs using Express.js
+This assignment will help you set up and interact with a database using Express.js and better-sqlite.
 
-This assignment for COMP 426 is intended to help you work through creating an API using Node.js and Express.js.
-This assignment is, as ever, an exercise in finding, reading, interpreting, and applying documentation.
+Make sure to consult the appropriate documentation as you work through the assignment instructions.
 
 ## DO NOT CLONE THIS REPOSITORY DIRECTLY
 
-Use the GitHub classroom link instead: https://classroom.github.com/a/cyXk13b7
+Use the GitHub classroom link instead: https://classroom.github.com/a/GQsrzvZT
 
 These links for every assignment are listed in the SECRETS repo: https://github.com/comp426-2022-spring/secrets
 
@@ -14,4 +13,4 @@ If you clone this repo directly, it will not be added to the organization as an 
 
 ## Instructions
 
-Full instructions for this assignment are available at: https://comp426.johndmart.in/a/03/
+Full instructions for this assignment are available at: https://comp426.johndmart.in/a/04/
