@@ -1,4 +1,5 @@
-# a04
+# a04 Logs and Databases
+
 This assignment will help you set up and interact with a database using Express.js and better-sqlite.
 
 Make sure to consult the appropriate documentation as you work through the assignment instructions.
