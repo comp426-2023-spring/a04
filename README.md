@@ -21,7 +21,7 @@ There are a only a few things that you will have to do very specifically in orde
 ### List of requirements for submission
 
 1. `server.js` file that takes an arbitrary port number as a command line argument (i.e. I should be able to run it with `node server.js`. The port should default to 5000 if no argument is given.
-2. Default API endpoint that returns `404 Not found` for any endpoints that are not defined.
+2. Default API endpoint that returns `404 NOT FOUND` for any endpoints that are not defined.
 3. Check endpoint at `/app/` that returns `200 OK`.
 4. Endpoint `/app/roll/` that returns JSON for a default roll of two six-sided dice one time. Example output might look like: ``.
 5. Endpoint `/app/roll/` should accept either JSON or URLEncoded data body for `sides`, `dice`, and `rolls`. Example URLEncoded string for data body: `?sides=6&dice=2&rolls=1`. Example JSON data body: `{"sides":6,"dice":2,"rolls":1}`.
