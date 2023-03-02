@@ -6,14 +6,15 @@ Make sure to consult the appropriate documentation as you work through the assig
 
 ## DO NOT CLONE THIS TEMPLATE REPOSITORY DIRECTLY
 
-Use the GitHub classroom link instead: https://classroom.github.com/a/CtRcwZji
+Use the GitHub classroom link instead: https://classroom.github.com/a/-NaU1Ost
 
 If you clone the template repo directly, it will not be added to the organization as an individual repo associated with your account and you will not be able to push to it. This repository should only be used for assignment issues.
 
 ## Instructions
 
-In this assignment, you are going to convert the functions that you wrote for a03 to emulate rolling dice and then do things with the resulting information.
-The focus of the assignment is not necessarily on creating basic API endpoints in Node using Express.js.
+In this assignment, you are going to wrap your rock-paper-scissors functions in API endpoints using Express.js.
+
+This should be very straightforward.
 
 The instructions for this are fairly sparse because I want you to be creative in how you approach this.
 There are a only a few things that you will have to do very specifically in order to make this work, but beyond that, HOW you do this is really up to you. 
