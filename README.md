@@ -19,24 +19,33 @@ This should be very straightforward.
 The instructions for this are fairly sparse because I want you to be creative in how you approach this.
 There are a only a few things that you will have to do very specifically in order to make this work, but beyond that, HOW you do this is really up to you. 
 
-### List of requirements for submission
+> Beware the regular expressions (regex) below.
+> 
+> `{"player":"(rock|paper|scissors)"}` means `{"player":"rock"}` or `{"player":"paper"}` or `{"player":"scissors"}`.
 
-1. `server.js` file that takes an arbitrary port number as a command line argument (i.e. I should be able to run it with `node server.js`. The port should default to 5000 if no argument is given.
+### Requirements
+
+#### Structural requirements
+
+1. Import your RPS and RPSLS modules from a03.
+2. Use your modules as controllers for the endpoints listed below.
+
+#### Operational requirements
+
+1. `server.js` file that takes an arbitrary port number as a command line argument (i.e. I should be able to run it with `node server.js --port=$PORTNUMBER`). The port should default to 5000 if no argument is given.
 2. Default API endpoint that returns `404 NOT FOUND` for any endpoints that are not defined.
 3. Check endpoint at `/app/` that returns `200 OK`.
-4. Endpoint `/app/roll/` that returns JSON for a default roll of two six-sided dice one time. Example output might look like: `{"sides":6,"dice":2,"rolls":1,"results":[12]}`.
-5. Endpoint `/app/roll/` should ALSO accept either JSON or URLEncoded data body for `sides`, `dice`, and `rolls`. Example URLEncoded string for data body: `?sides=20&dice=4&rolls=3`. Example JSON data body: `{"sides":20,"dice":4,"rolls":3}`. The format of the resulting JSON should look like: `{"sides":20,"dice":4,"rolls":3,"results":[19,3,60]}`.
-6. Endpoint `/app/roll/:sides/` that returns JSON for a default number of rolls and dice with whatever number of sides is specified in the parameter. For example, `/app/roll/6/` should return JSON for two six-sided dice, rolled one time, whereas `/app/roll/10/` should return JSON for two ten-sided dice, rolled 1 time. The format of the resulting JSON should look like: `{"sides":10,"dice":2,"rolls":1,"results":[17]}`.
-6. Endpoint `/app/roll/:sides/:dice/` that returns JSON for a default number of rolls with whatever number of sides and dice specified in the parameters. For example, `/app/roll/6/2/` should return JSON for two six-sided dice, rolled one time, whereas `/app/roll/10/3/` should return JSON for three ten-sided dice, rolled 1 time. The format of the resulting JSON should look like: `{"sides":10,"dice":3,"rolls":1,"results":[27]}`.
-7. Endpoint `/app/roll/:sides/:dice/:rolls/` that returns JSON for the specified number of rolls with whatever number of sides and dice specified in the parameters. For example, `/app/roll/6/2/1/` should return JSON for two six-sided dice, rolled one time, whereas `/app/roll/10/3/8/` should return JSON for three ten-sided dice, rolled 1 time. The format of the resulting JSON should look like: `{"sides":10,"dice":3,"rolls":8,"results":[6,13,30,17,16,27,4,29]}`.
-8. ALL endpoints should return HTTP headers including a status code and the appropriate content type for the response.
-9. All of this should be in a Node package with `"main"` set to `server.js`.
-10. The test script defined in `package.json` should be set to `"node server.js --port=5555"`
+4. Endpoint `/app/rps/` that returns `{"player":"(rock|paper|scissors)"}`. (HINT: regex)
+5. Endpoint `/app/rpsls/` that returns `{"player":"(rock|paper|scissors|lizard|spock)"}`.
+6. Endpoint `/app/rps/play/` should take `shot=(rock|paper|scissors)` or `{"shot":"(rock|paper|scissors)"}` as data bodies and return 
+10. ALL endpoints should return HTTP headers including a status code and the appropriate content type for the response.
+11. All of this should be in a Node package with `"main"` set to `server.js`.
+12. The test script defined in `package.json` should be set to `"node server.js --port=5555"`
 
 ### Prerequisites
 
 1. Run `npm init`.
-2. Install express and minimist.
+2. Install all dependencies.
 3. Create a `server.js` file.
 4. Place your a03 module in a subdirectory named `lib` and make sure that it is imported in `server.js`.
 
@@ -74,74 +83,116 @@ The response should be:
 404 NOT FOUND
 ```
 
-#### Roll default dice 
+#### Play RPS
 
 ```
-PORT="$(shuf -i 2000-65535 -n 1)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s http://localhost:${PORT}/app/roll/ && sleep 5s
+PORT="$(shuf -i 2000-65535 -n 1)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s http://localhost:${PORT}/app/rps/ && sleep 5s
 ```
 
-> This calls `/app/roll/` with no body message. 
+> This calls `/app/rps/` with no body message. 
 
-The response should be something like:
-
-```
-{"sides":6,"dice":2,"rolls":1,"results":[12]}
-```
-
-#### Roll random dice
+The response should look like this:
 
 ```
-PORT="$(shuf -i 2000-65535 -n 1)"; SIDES="$(shuf -i 4-20 -n 1)"; DICE="$(shuf -i 1-4 -n 1)"; ROLLS="$(shuf -i 1-3 -n 1)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s -d 'sides=${SIDES}&dice=${DICE}&rolls=${ROLLS}' http://localhost:${PORT}/app/roll/ && sleep 5s
+{"player":"(rock|paper|scissors)"}
 ```
 
-> This calls your `/app/roll/` endpoint with random numbers passed as a URLEncoded message body. You could also do this with JSON.
-
-The response should be something that looks like:
+#### Play RPSLS
 
 ```
-{"sides":20,"dice":4,"rolls":3,"results":[19,3,60]}
-``` 
-
-#### Roll dice with sides parameter
-
-```
-PORT="$(shuf -i 2000-65535 -n 1)"; SIDES="$(shuf -i 4-20 -n 1)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s http://localhost:${PORT}/app/roll/${SIDES}/ && sleep 5s
+PORT="$(shuf -i 2000-65535 -n 1)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s http://localhost:${PORT}/app/rpsls/ && sleep 5s
 ```
 
-> This calls your `/app/roll/:sides/` endpoint with a random number assigned in the `sides` parameter. 
+> This calls `/app/rpsls/` with no body message. 
 
-The response should look like:
-
-```
-{"sides":10,"dice":2,"rolls":1,"results":[17]}
-```
-
-#### Roll dice with sides and dice parameters
+The response should look like this:
 
 ```
-PORT="$(shuf -i 2000-65535 -n 1)"; SIDES="$(shuf -i 4-20 -n 1)"; DICE="$(shuf -i 1-4 -n 1)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s http://localhost:${PORT}/app/roll/${SIDES}/${DICE}/ && sleep 5s
+{"player":"(rock|paper|scissors|lizard|spock)"}
 ```
 
-> This calls your `/app/roll/:sides/:dice/` endpoint with a random number assigned in the `sides` and `dice` parameters.
-
-The response should be similar to:
+#### Play RPS against an opponent (URLEncoded data body)
 
 ```
-{"sides":10,"dice":3,"rolls":1,"results":[27]}
+PORT="$(shuf -i 2000-65535 -n 1)"; SHOT="$(shuf -n1 -e rock paper scissors)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s -G --data-urlencode "shot=${SHOT}" http://localhost:${PORT}/app/rps/play/ && sleep 5s
 ```
 
-#### Roll dice with sides, dice, and rolls parameters
+> This calls `/app/rps/play/` with a URLEncoded body message. 
+
+The response should look like this:
 
 ```
-PORT="$(shuf -i 2000-65535 -n 1)"; SIDES="$(shuf -i 4-20 -n 1)"; DICE="$(shuf -i 1-4 -n 1)"; ROLLS="$(shuf -i 1-3 -n 1)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s http://localhost:${PORT}/app/roll/${SIDES}/${DICE}/${ROLLS}/ && sleep 5s
+{"player":"(rock|paper|scissors)","opponent":"(rock|paper|scissors)","result":"(win|lose|tie)"}
 ```
 
-> This calls your `/app/roll/:sides/:dice/:rolls/` endpoint with a random number assigned in the `sides`, `dice`, and `rolls` parameters.
-
-The response should look like:
+#### Play RPSLS against an opponent (URLEncoded data body)
 
 ```
-{"sides":10,"dice":3,"rolls":8,"results":[6,13,30,17,16,27,4,29]}
+PORT="$(shuf -i 2000-65535 -n 1)"; SHOT="$(shuf -n1 -e rock paper scissors lizard spock)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s -G --data "shot=${SHOT}" http://localhost:${PORT}/app/rpsls/play/ && sleep 5s
+```
+
+> This calls `/app/rpsls/play/` with a URLEncoded body message. 
+
+The response should look like this:
+
+```
+{"player":"(rock|paper|scissors|lizard|spock)","opponent":"(rock|paper|scissors|lizard|spock)","result":"(win|lose|tie)"}
+```
+
+#### Play RPS against an opponent (JSON data body)
+
+```
+PORT="$(shuf -i 2000-65535 -n 1)"; SHOT="$(shuf -n1 -e rock paper scissors)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s -X POST -H "Content-Type: application/json" --data '{"shot":"'${SHOT}'"}' http://localhost:${PORT}/app/rps/play/ && sleep 5s
+```
+
+> This calls `/app/rps/play/` with a JSON body message. 
+
+The response should look like this:
+
+```
+{"player":"(rock|paper|scissors)","opponent":"(rock|paper|scissors)","result":"(win|lose|tie)"}
+```
+
+#### Play RPSLS against an opponent (JSON data body)
+
+```
+PORT="$(shuf -i 2000-65535 -n 1)"; SHOT="$(shuf -n1 -e rock paper scissors lizard spock)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s -X POST -H "Content-Type: application/json" --data '{"shot":"'${SHOT}'"}' http://localhost:${PORT}/app/rpsls/play/ && sleep 5s
+```
+
+> This calls `/app/rpsls/play/` with a JSON body message. 
+
+The response should look like this:
+
+```
+{"player":"(rock|paper|scissors|lizard|spock)","opponent":"(rock|paper|scissors|lizard|spock)","result":"(win|lose|tie)"}
+```
+
+#### Play RPS against an opponent (parameter endpoint)
+
+```
+PORT="$(shuf -i 2000-65535 -n 1)"; SHOT="$(shuf -n1 -e rock paper scissors)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s http://localhost:${PORT}/app/rps/play/${SHOT}/ && sleep 5s
+```
+
+> This calls `/app/rps/play/(rock|paper|scissors)/` with no body message. 
+
+The response should look like this:
+
+```
+{"player":"(rock|paper|scissors)","opponent":"(rock|paper|scissors)","result":"(win|lose|tie)"}
+```
+
+#### Play RPSLS against an opponent (parameter endpoint)
+
+```
+PORT="$(shuf -i 2000-65535 -n 1)"; SHOT="$(shuf -n1 -e rock paper scissors lizard spock)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s http://localhost:${PORT}/app/rpsls/play/${SHOT}/ && sleep 5s
+```
+
+> This calls `/app/rpsls/play/(rock|paper|scissors|lizard|spock)/` with no body message. 
+
+The response should look like this:
+
+```
+{"player":"(rock|paper|scissors|lizard|spock)","opponent":"(rock|paper|scissors|lizard|spock)","result":"(win|lose|tie)"}
 ```
 
 #### Look at the package.json file
