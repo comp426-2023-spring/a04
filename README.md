@@ -89,7 +89,7 @@ The response should be:
 PORT="$(shuf -i 2000-65535 -n 1)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s http://localhost:${PORT}/app/rps/ && sleep 5s
 ```
 
-> This calls `/app/rps/` with no body message. 
+> This calls `/app/rps/` with no request body. 
 
 The response should look like this:
 
@@ -103,7 +103,7 @@ The response should look like this:
 PORT="$(shuf -i 2000-65535 -n 1)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s http://localhost:${PORT}/app/rpsls/ && sleep 5s
 ```
 
-> This calls `/app/rpsls/` with no body message. 
+> This calls `/app/rpsls/` with no request body. 
 
 The response should look like this:
 
@@ -117,7 +117,7 @@ The response should look like this:
 PORT="$(shuf -i 2000-65535 -n 1)"; SHOT="$(shuf -n1 -e rock paper scissors)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s -G --data-urlencode "shot=${SHOT}" http://localhost:${PORT}/app/rps/play/ && sleep 5s
 ```
 
-> This calls `/app/rps/play/` with a URLEncoded body message. 
+> This calls `/app/rps/play/` with a URLEncoded request body. 
 
 The response should look like this:
 
@@ -131,7 +131,7 @@ The response should look like this:
 PORT="$(shuf -i 2000-65535 -n 1)"; SHOT="$(shuf -n1 -e rock paper scissors lizard spock)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s -G --data "shot=${SHOT}" http://localhost:${PORT}/app/rpsls/play/ && sleep 5s
 ```
 
-> This calls `/app/rpsls/play/` with a URLEncoded body message. 
+> This calls `/app/rpsls/play/` with a URLEncoded request body. 
 
 The response should look like this:
 
@@ -145,7 +145,7 @@ The response should look like this:
 PORT="$(shuf -i 2000-65535 -n 1)"; SHOT="$(shuf -n1 -e rock paper scissors)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s -X POST -H "Content-Type: application/json" --data '{"shot":"'${SHOT}'"}' http://localhost:${PORT}/app/rps/play/ && sleep 5s
 ```
 
-> This calls `/app/rps/play/` with a JSON body message. 
+> This calls `/app/rps/play/` with a JSON request body. 
 
 The response should look like this:
 
@@ -159,7 +159,7 @@ The response should look like this:
 PORT="$(shuf -i 2000-65535 -n 1)"; SHOT="$(shuf -n1 -e rock paper scissors lizard spock)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s -X POST -H "Content-Type: application/json" --data '{"shot":"'${SHOT}'"}' http://localhost:${PORT}/app/rpsls/play/ && sleep 5s
 ```
 
-> This calls `/app/rpsls/play/` with a JSON body message. 
+> This calls `/app/rpsls/play/` with a JSON request body. 
 
 The response should look like this:
 
@@ -173,7 +173,7 @@ The response should look like this:
 PORT="$(shuf -i 2000-65535 -n 1)"; SHOT="$(shuf -n1 -e rock paper scissors)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s http://localhost:${PORT}/app/rps/play/${SHOT}/ && sleep 5s
 ```
 
-> This calls `/app/rps/play/(rock|paper|scissors)/` with no body message. 
+> This calls `/app/rps/play/(rock|paper|scissors)/` with no request body. 
 
 The response should look like this:
 
@@ -187,7 +187,7 @@ The response should look like this:
 PORT="$(shuf -i 2000-65535 -n 1)"; SHOT="$(shuf -n1 -e rock paper scissors lizard spock)"; (timeout --signal=SIGINT 5 node server.js --port=$PORT; exit 0) & sleep 1s && curl -s http://localhost:${PORT}/app/rpsls/play/${SHOT}/ && sleep 5s
 ```
 
-> This calls `/app/rpsls/play/(rock|paper|scissors|lizard|spock)/` with no body message. 
+> This calls `/app/rpsls/play/(rock|paper|scissors|lizard|spock)/` with no request body. 
 
 The response should look like this:
 
