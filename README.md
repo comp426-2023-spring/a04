@@ -37,7 +37,10 @@ There are a only a few things that you will have to do very specifically in orde
 3. Check endpoint at `/app/` that returns `200 OK`.
 4. Endpoint `/app/rps/` that returns `{"player":"(rock|paper|scissors)"}`. (HINT: regex)
 5. Endpoint `/app/rpsls/` that returns `{"player":"(rock|paper|scissors|lizard|spock)"}`.
-6. Endpoint `/app/rps/play/` should take `shot=(rock|paper|scissors)` or `{"shot":"(rock|paper|scissors)"}` as data bodies and return 
+6. Endpoint `/app/rps/play/` should accept request bodies in the following forms: `shot=(rock|paper|scissors)` (URLEncoded) or `{"shot":"(rock|paper|scissors)"}` (JSON) as data bodies and return `{"player":"(rock|paper|scissors)","opponent":"(rock|paper|scissors)","result":"(win|lose|tie)"}`.
+7. Endpoint `/app/rpsls/play/` should accept request bodies in the following forms: `shot=(rock|paper|scissors)` (URLEncoded) or `{"shot":"(rock|paper|scissors)"}` (JSON) and return `{"player":"(rock|paper|scissors)","opponent":"(rock|paper|scissors)","result":"(win|lose|tie)"}`.
+8. Endpoint `/app/rpsls/play/(rock|paper|scissors)/` should return `{"player":"(rock|paper|scissors)","opponent":"(rock|paper|scissors)","result":"(win|lose|tie)"}`.
+9. Endpoint `/app/rpsls/play/(rock|paper|scissors|lizard|spock)/` should return `{"player":"(rock|paper|scissors|lizard|spock)","opponent":"(rock|paper|scissors|lizard|spock)","result":"(win|lose|tie)"}`.
 10. ALL endpoints should return HTTP headers including a status code and the appropriate content type for the response.
 11. All of this should be in a Node package with `"main"` set to `server.js`.
 12. The test script defined in `package.json` should be set to `"node server.js --port=5555"`
